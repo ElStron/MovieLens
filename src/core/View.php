@@ -7,13 +7,13 @@ class View
     {
         $path = __DIR__ . '/../Views/' . $template . '.php';
         if (!empty($data)) {
-            extract($data); // Extrae variables del array $data
+            extract($data);
         }
         if (!file_exists($path)) {
-            echo "❌ Vista no encontrada";
+            http_response_code(404);
+            return;
         } else {
-
-           require $path; // Incluye el archivo de la vista
+           require $path;
         }
     }
 

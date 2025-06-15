@@ -26,7 +26,6 @@ class Router
 
     protected function convertToRegex(string $uri): string
     {
-        // Convierte "/user/{id}" en "#^/user/([^/]+)$#"
         return '#^' . preg_replace('#\{[^/]+\}#', '([^/]+)', $uri) . '$#';
     }
 
@@ -36,7 +35,7 @@ class Router
 
         foreach ($this->routes[$method] ?? [] as $route) {
             if (preg_match($route['pattern'], $requestUri, $matches)) {
-                array_shift($matches); // Quitamos el match completo
+                array_shift($matches);
 
                 [$controller, $method] = explode('@', $route['action']);
                 $controllerInstance = new $controller;
