@@ -3,6 +3,7 @@ namespace App\Core;
 
 use PDO;
 use PDOException;
+require_once __DIR__ . '/../../config/db.php';
 
 class Database
 {
@@ -11,10 +12,10 @@ class Database
     public static function getConnection(): PDO
     {
         if (self::$pdo === null) {
-            $host = 'localhost';
-            $db   = 'movies2';
-            $user = 'root';
-            $pass = '';
+            $host = DB_HOST;
+            $db   = DB_NAME;
+            $user = DB_USER;
+            $pass = DB_PASS;
             $charset = 'utf8mb4';
             $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 

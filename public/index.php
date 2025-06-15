@@ -9,6 +9,12 @@ use App\Controllers\MoviesController;
 require_once __DIR__ . '/../src/Core/Autoloader.php';
 Autoloader::register();
 
+if (!getenv('APP_ENV')) {
+    require_once __DIR__ . '/../src/utils/env.php';
+    loadEnv(__DIR__ . '/../.env');
+}
+
+
 $router = new Router();
 $router->get('/', HomeController::class . '@index');
 $router->get('/about', AboutController::class . '@index');
