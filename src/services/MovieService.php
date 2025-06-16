@@ -1,40 +1,57 @@
-<?php 
+<?php
 namespace App\Services;
 
-use App\Core\Database;
+use App\Models\Movie;
+use App\Repositories\MovieRepository;
+use App\Exceptions\MovieNotFoundException;
+use App\Exceptions\ValidationException;
 
 class MovieService
 {
-    private $db;
-    public function __construct()
+    private MovieRepository $movieRepository;
+
+    public function __construct(MovieRepository $movieRepository)
     {
-        $this->db = Database::getConnection();
+        $this->movieRepository = $movieRepository;
     }
 
-    public function getBySlug(string $slug): ?array
+    public function getPaginatedMovies(int $limit, int $offset): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM peliculas WHERE slug_movie = :slug");
-        $stmt->execute(['slug' => $slug]);
-        return $stmt->fetch() ?: null;
+        return $this->movieRepository->findAllPaginated($limit, $offset);
     }
 
-    public function getAll(): array
+    public function getMovieBySlug(string $slug): ?Movie
     {
-        $stmt = $this->db->query("SELECT * FROM peliculas");
-        return $stmt->fetchAll() ?: [];
+        if (empty($slug)) return null;
+
+        $movie = $this->movieRepository->findBySlug($slug);
+        if (!$movie) {
+            throw new MovieNotFoundException( 
+                "La película con el slug '{$slug}' no fue encontrada."
+            );
+        }
+        return $movie;
     }
 
-    public function get($limit = 10, $offset = 0): array
+    public function createMovie(array $data): Movie
     {
-        $stmt = $this->db->prepare("SELECT * FROM peliculas ORDER BY movieDate DESC LIMIT :limit OFFSET :offset");
-        $stmt->bindValue(':limit', (int)$limit, \PDO::PARAM_INT);
-        $stmt->bindValue(':offset', (int)$offset, \PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll() ?: [];
-    }
+        if (empty($data['title']) || empty($data['description']) || empty($data['release_date'])) {
+            throw new ValidationException("campos requeridos faltantes.");
+        }
 
-    public function create(array $data): bool
-    {
-        return true;
+        // <- Crear la entidad Movie 
+        $movie = new Movie(
+            null, 
+            $data['title'],
+            $data['slug'],
+            $data['description'],
+            $data['release_date']
+        );
+
+        if (!$this->movieRepository->save($movie)) {
+            throw new \RuntimeException('No se pudo guardar la película.');
+        }
+
+        return $movie;
     }
 }
