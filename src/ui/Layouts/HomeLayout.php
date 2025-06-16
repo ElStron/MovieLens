@@ -12,7 +12,7 @@
             background-color: #0a0d18;
             min-height: 100dvh;
             display: grid;
-            grid-template-rows: 1fr auto;
+            grid-template-rows:auto 1fr auto;
             grid-template-columns: 100%;
             overflow-x: hidden;
             color: #ffffff;
@@ -86,6 +86,7 @@
     </style>
 </head>
 <body>
+    <?php include(__DIR__ . '/../components/Navigation.php'); ?>
     <main>
         <?php
         // Aquí es donde "inyectarías" el contenido del "child"
