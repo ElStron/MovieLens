@@ -33,6 +33,11 @@ class MovieService
         return $movie;
     }
 
+    public function getLastMovie(): ?Movie
+    {
+        return $this->movieRepository->findLast();
+    }
+
     public function createMovie(array $data): Movie
     {
         if (empty($data['title']) || empty($data['description']) || empty($data['release_date'])) {
