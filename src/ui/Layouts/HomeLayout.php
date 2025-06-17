@@ -77,7 +77,7 @@
         isolation: isolate;
         }
 
-        main {
+        .max {
             padding: 20px;
             max-width: 1280px;
             margin: 0 auto;
@@ -89,11 +89,10 @@
     <?php include(__DIR__ . '/../components/Navigation.php'); ?>
     <main>
         <?php
-        // Aquí es donde "inyectarías" el contenido del "child"
         if (isset($mainContent) && is_callable($mainContent)) {
-            $mainContent(); // Ejecuta el callback que contiene el HTML del "child"
+            $mainContent(); 
         } elseif (isset($mainContent)) {
-            echo $mainContent; // Si es una cadena, la imprime directamente
+            echo $mainContent;
         }
         ?>
     </main>
