@@ -2,7 +2,7 @@
     include __DIR__ . '/../movieCard.php'
 ?>
 
-<section id="movies">
+<section id="movies" class="movies max">
     <h1>Películas</h1>
     <ul class="movies-list">
         <?php foreach ($movies as $movie): ?>
