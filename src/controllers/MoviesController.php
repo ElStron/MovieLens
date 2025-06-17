@@ -2,21 +2,16 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Core\Database;
 use App\Services\MovieService;
-use App\Repositories\MovieRepository; 
 use App\Models\Movie; 
 
 class MoviesController extends Controller
 {
     private MovieService $movieService;
 
-    public function __construct()
+    public function __construct(MovieService $movieService)
     {
-
-        $database = new Database(); 
-        $movieRepository = new MovieRepository($database); 
-        $this->movieService = new MovieService($movieRepository);
+        $this->movieService = $movieService;
     }
 
     public function index(): void
