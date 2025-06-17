@@ -68,6 +68,19 @@ class MovieRepository
     }
 
     /**
+     * Encuentra la última película.
+     * @return Movie|null La última película o null si no existe.
+     */
+    public function findLast(): ?Movie
+    {
+        $conn = $this->db->getConnection(); // Obtén la conexión PDO
+        $stmt = $conn->prepare("SELECT * FROM peliculas ORDER BY date_movie DESC LIMIT 1");
+        $stmt->execute();
+        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $data ? Movie::fromArray($data) : null;
+    }
+
+    /**
      * Guarda una película (inserta o actualiza).
      * @param Movie $movie El objeto Movie a guardar.
      * @return bool True si la operación fue exitosa, false en caso contrario.
