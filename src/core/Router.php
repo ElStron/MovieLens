@@ -1,9 +1,17 @@
 <?php
 namespace App\Core;
 
+use App\Core\Container;
+
 class Router
 {
     protected array $routes = [];
+    protected Container $container;
+
+    public function __construct(Container $container)
+    {
+        $this->container = $container;
+    }
 
     public function get(string $uri, string $action): void
     {
@@ -37,10 +45,12 @@ class Router
             if (preg_match($route['pattern'], $requestUri, $matches)) {
                 array_shift($matches);
 
-                [$controller, $method] = explode('@', $route['action']);
-                $controllerInstance = new $controller;
+                [$controllerClass, $controllerMethod] = explode('@', $route['action']);
 
-                call_user_func_array([$controllerInstance, $method], $matches);
+                // 👇 Aquí usamos el contenedor para instanciar el controlador
+                $controller = $this->container->get($controllerClass);
+
+                call_user_func_array([$controller, $controllerMethod], $matches);
                 return;
             }
         }
