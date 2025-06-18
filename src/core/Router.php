@@ -47,7 +47,6 @@ class Router
 
                 [$controllerClass, $controllerMethod] = explode('@', $route['action']);
 
-                // 👇 Aquí usamos el contenedor para instanciar el controlador
                 $controller = $this->container->get($controllerClass);
 
                 call_user_func_array([$controller, $controllerMethod], $matches);
