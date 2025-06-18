@@ -4,10 +4,8 @@ define('APP_START', microtime(true));
 
 use App\Controllers\{HomeController, MoviesController, TvShowController};
 use App\Core\{Container, Router, Database};
-use App\Services\MovieService;
-use App\Services\TvShowService;
-use App\Repositories\MovieRepository;
-use App\Repositories\TvShowRepository;
+use App\Services\{MovieService, TvShowService};
+use App\Repositories\{MovieRepository, TvShowRepository};
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

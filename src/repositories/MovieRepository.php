@@ -74,7 +74,7 @@ class MovieRepository
     public function findLast(): ?Movie
     {
         $conn = $this->db->getConnection(); // Obtén la conexión PDO
-        $stmt = $conn->prepare("SELECT * FROM peliculas ORDER BY date_movie DESC LIMIT 1");
+        $stmt = $conn->prepare("SELECT * FROM peliculas ORDER BY movieDate DESC LIMIT 1");
         $stmt->execute();
         $data = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $data ? Movie::fromArray($data) : null;

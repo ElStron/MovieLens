@@ -1,14 +1,14 @@
-<section id="last-movies-added" class="last-movies-added max">
-    <h2 class="section-title">Últimas Películas Añadidas</h2>
-    <ul class="movies-grid">
-        {% for movie in lastMoviesAdded %}
+<section id="last-tvshows-added" class="last-tvshows-added max">
+    <h2 class="section-title">Ultimas Series Añadidas</h2>
+    <ul class="tvshows-grid">
+        {% for tvShow in lastTvShowsAdded %}
             <li>
                 {%
                     include 'components/MovieCard.twig' 
                     with { 
-                        title: movie.title, 
-                        image: movie.posterImage, 
-                        slug: "/pelicula/" ~ movie.slug
+                        title: tvShow.title, 
+                        image: tvShow.poster, 
+                        slug: "/serie/" ~ tvShow.slug
                     } only
                 %}
             </li>
@@ -16,13 +16,13 @@
     </ul>
 </section>
 <style>
-    #last-movies-added {
+    #last-tvshows-added {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
         margin: 0 auto;
         width: 100%;
-        .movies-grid {
+        .tvshows-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;

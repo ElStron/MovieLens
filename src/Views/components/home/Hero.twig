@@ -5,8 +5,8 @@
         </picture>
         <article class="hero__text">
             <h1 class="hero__title">{{ lastMovie.title }}</h1>
-            <p class="hero__subtitle">Descubre las últimas películas y series de tu plataforma favorita.</p>
-            <a href="/pelicula/{{ lastMovie.slug }}" class="btn btn-primary">Ver Películas</a>
+            <p class="hero__subtitle">{{ lastMovie.synopsis }}</p>
+            <a href="/pelicula/{{ lastMovie.slug }}" class="btn btn-primary">Ver</a>
         </article>
     </div>
 </section>
@@ -51,6 +51,12 @@
     .hero__subtitle {
         font-size: 1.25rem;
         margin-bottom: 1.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+                line-clamp: 2;
+        -webkit-box-orient: vertical;
     }
 
     .poster__image {
