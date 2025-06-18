@@ -39,17 +39,21 @@ class Router
 
     public function dispatch(string $method, string $requestUri): void
     {
-        $requestUri = parse_url($requestUri, PHP_URL_PATH);
+        $parsedUrl = parse_url($requestUri);
+        $path = $parsedUrl['path'] ?? '/';
+        parse_str($parsedUrl['query'] ?? '', $queryParams);
 
         foreach ($this->routes[$method] ?? [] as $route) {
-            if (preg_match($route['pattern'], $requestUri, $matches)) {
+            if (preg_match($route['pattern'], $path, $matches)) {
                 array_shift($matches);
 
                 [$controllerClass, $controllerMethod] = explode('@', $route['action']);
 
                 $controller = $this->container->get($controllerClass);
+       
+                $args = array_merge($matches, [$queryParams]);
 
-                call_user_func_array([$controller, $controllerMethod], $matches);
+                call_user_func_array([$controller, $controllerMethod], $args);
                 return;
             }
         }
