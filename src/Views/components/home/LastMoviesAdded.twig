@@ -5,7 +5,11 @@
             <li>
                 {%
                     include 'components/MovieCard.twig' 
-                    with { title: movie.title, image: movie.posterImage } only
+                    with { 
+                        title: movie.title, 
+                        image: movie.posterImage, 
+                        slug: movie.slug 
+                    } only
                 %}
             </li>
         {% endfor %}
