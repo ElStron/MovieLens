@@ -49,9 +49,18 @@ class MoviesController extends Controller
         ]);
     }
 
-    public function apiIndex(int $offset, int $limit): void
+    public function apiIndex(array $queryParams): void
     {
-        $movies = $this->movieService->getPaginatedMovies($limit, $offset);
+        $page = (int)($queryParams['page'] ?? 1);
+        $itemsPerPage = (int)($queryParams['itemsPerPage'] ?? 10);
+        $offset = ($page - 1) * $itemsPerPage;
+        $limit = $itemsPerPage > 100 ? 100 : $itemsPerPage; 
+
+        $movies = match($queryParams['type'] ?? 'all') {
+            'latest' => $this->movieService->getLastMoviesAdded($offset, $limit),
+            'released' => $this->movieService->getReleasedMovies($offset, $limit),
+            default => $this->movieService->getPaginatedMovies($limit, $offset)
+        };
 
         if (empty($movies)) {
             http_response_code(404);
@@ -59,7 +68,7 @@ class MoviesController extends Controller
             return;
         }
 
-        $this->json($movies);
+        $this->json(['movies' => $movies, 'page' => $page]);
     }
 
 }
