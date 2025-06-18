@@ -15,7 +15,6 @@ class Container {
         }
 
         if (!isset($this->bindings[$abstract])) {
-            // Si no está ligado, lo intenta instanciar automáticamente
             return $this->instances[$abstract] = $this->autoResolve($abstract);
         }
 
