@@ -3,7 +3,7 @@
     <ul class="tvshows-grid">
         {% for show in lastTvShowsAdded %}
         <li class="movie-card">
-            <a href="{{ show.slug }}">
+            <a href="/serie/{{ show.slug }}">
                 <img src="{{ show.poster }}" alt="{{ show.title }} Poster" />
                 <h3>{{ show.title }}</h3>
             </a>

@@ -29,9 +29,10 @@ $router->get('/', HomeController::class . '@index');
 $router->get('/peliculas', MoviesController::class . '@index');
 $router->get('/pelicula/{slug}', MoviesController::class . '@show');
 
-
 $router->get('/series',TvShowController::class . '@index');
+$router->get('/serie/{slug}', TvShowController::class . '@show');
 
-$router->get('/api/tvshows', TvShowController::class . '@apiIndex');
+$router->get('/api/peliculas', MoviesController::class . '@apiIndex');
+$router->get('/api/series', TvShowController::class . '@apiIndex');
 
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

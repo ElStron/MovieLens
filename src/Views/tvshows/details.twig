@@ -1,0 +1,15 @@
+{% extends "layouts/HomeLayout.twig" %}
+
+{% block content %}
+<section id="hero" class="hero">
+    <div class="hero__content max">
+        <picture class="poster__image">
+            <img src="{{ tvShow.poster }}" alt="Hero Image" />
+        </picture>
+        <article class="hero__text">
+            <h1 class="hero__title">{{ tvShow.title }}</h1>
+            <p class="hero__subtitle">Descubre las últimas series de tu plataforma favorita.</p>
+            <a href="/serie/{{ tvShow.slug }}" class="btn btn-primary">Ver Series</a>
+        </article>
+    </div>
+{% endblock %}

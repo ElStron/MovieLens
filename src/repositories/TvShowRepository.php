@@ -22,13 +22,14 @@ class TvShowRepository
         return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
     }
 
-    public function findBySlug(string $slug): ?array
+    public function findBySlug(string $slug): ?TvShow
     {
         $conn = $this->db->getConnection();
         $stmt = $conn->prepare("SELECT * FROM series WHERE slug_serie = :slug LIMIT 1");
         $stmt->bindParam(':slug', $slug, \PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $data ? TvShow::fromArray($data) : null;
     }
 
     public function findAllPaginated(int $limit, int $offset): array
