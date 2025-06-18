@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include 'components/BaseHead.twig' %}
+    <style> 
+        {% include 'components/Reset.twig' ignore missing %}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0a0d18;
+            min-height: 100dvh;
+            display: grid;
+            grid-template-rows:auto 1fr auto;
+            grid-template-columns: 100%;
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .max {
+            padding: 20px;
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .movie-card {
+            background-color: #1a1d2b;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            padding: 10px;
+
+            img {
+                width: 100%;
+                max-height: 300px;
+                object-fit: cover;
+                aspect-ratio: 9/16;
+                border-radius: 8px;
+            }
+
+            box-shadow: inset -1px -1px 0 1px rgb(0 255 231 / 6%);
+            &:hover {
+                transform: scale(1.05);
+                box-shadow: inset -1px -1px 0 1px rgb(0 255 231), inset 1px 1px 0 1px rgb(0 255 231);
+                filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'components/Navigation.twig' ignore missing %}
+    <main>
+          {% block content %}{% endblock %}
+    </main>
+    <footer class="max">
+        <p>&copy; 2025 Mi PHP App</p>
+    </footer>
+</body>
+</html>
