@@ -48,4 +48,18 @@ class MoviesController extends Controller
             'movie' => $movie
         ]);
     }
+
+    public function apiIndex(int $offset, int $limit): void
+    {
+        $movies = $this->movieService->getPaginatedMovies($limit, $offset);
+
+        if (empty($movies)) {
+            http_response_code(404);
+            $this->json(['error' => 'No movies found']);
+            return;
+        }
+
+        $this->json($movies);
+    }
+
 }
