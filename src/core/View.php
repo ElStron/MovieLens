@@ -19,6 +19,9 @@ class View
             require $path;
             $output = ob_get_clean();
             echo minify_html($output);
+            $duration = microtime(true) - APP_START;
+            echo "Tiempo de carga: " . round($duration * 1000, 2) . " ms";
+
         }
     }
 
