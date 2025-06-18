@@ -16,12 +16,16 @@ class HomeController extends Controller
     public function index(): void
     {
         $lastMovieData = $this->movieService->getLastMovie();
-        if (!$lastMovieData) {
-            http_response_code(404);
-            echo "No hay películas disponibles en este momento.";
-            return;
-        }
+        $releasedMovies = $this->movieService->getRelasedMovies(5, 0);
+        $lastMoviesAdded = $this->movieService->getLastMoviesAdded(5, 0);
 
-        $this->view('home', ['title' => 'Bienvenido a la Aplicación', 'lastMovie' => $lastMovieData]);
+        $this->twig('index', 
+            [
+                'title' => "Explora las Películas", 
+                'lastMovie' => $lastMovieData,
+                'releasedMovies' => $releasedMovies,
+                'lastMoviesAdded' => $lastMoviesAdded
+            ]
+        );
     }
 }

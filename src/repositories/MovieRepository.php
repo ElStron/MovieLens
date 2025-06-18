@@ -123,4 +123,73 @@ class MovieRepository
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    /**
+     * Busca películas según criterios dinámicos.
+     * @param array $criteria ['campo' => valor, ...]
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param string|null $orderBy
+     * @param string $orderDir
+     * @return Movie[]
+     */
+    public function findByCriteria(
+        array $criteria = [],
+        ?int $limit = null,
+        ?int $offset = null,
+        ?string $orderBy = null,
+        string $orderDir = 'DESC'
+    ): array {
+        $conn = $this->db->getConnection();
+        $sql = "SELECT * FROM peliculas";
+        $where = [];
+        $params = [];
+
+        foreach ($criteria as $key => $value) {
+            // Soporta operadores en la clave, ej: 'release_date >='
+            if (preg_match('/^(\w+)\s*(>=|<=|<>|!=|=|>|<)$/', $key, $matches)) {
+                $field = $matches[1];
+                $operator = $matches[2];
+            } else {
+                $field = $key;
+                $operator = '=';
+            }
+            $paramKey = ':' . preg_replace('/\W/', '_', $field . uniqid());
+            $where[] = "$field $operator $paramKey";
+            $params[$paramKey] = $value;
+        }
+
+        if ($where) {
+            $sql .= " WHERE " . implode(' AND ', $where);
+        }
+
+        if ($orderBy) {
+            $sql .= " ORDER BY $orderBy $orderDir";
+        }
+
+        if ($limit !== null) {
+            $sql .= " LIMIT :limit";
+            $params[':limit'] = $limit;
+        }
+        if ($offset !== null) {
+            $sql .= " OFFSET :offset";
+            $params[':offset'] = $offset;
+        }
+
+        $stmt = $conn->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $type = is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR;
+            $stmt->bindValue($key, $value, $type);
+        }
+
+        $stmt->execute();
+        $moviesData = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $movies = [];
+        foreach ($moviesData as $data) {
+            $movies[] = Movie::fromArray($data);
+        }
+        return $movies;
+    }
 }

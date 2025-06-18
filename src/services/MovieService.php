@@ -38,6 +38,19 @@ class MovieService
         return $this->movieRepository->findLast();
     }
 
+    public function getLastMoviesAdded(int $limit = 5, int $offset = 0): array
+    {
+        return $this->movieRepository->findByCriteria([], $limit, $offset, 'ID_movie', 'DESC');
+    }
+
+    public function getRelasedMovies(int $limit, int $offset): array
+    {
+        $criteria = [
+            'date_movie >=' => date('Y-m-d', strtotime('-30 days'))
+        ];
+        return $this->movieRepository->findByCriteria($criteria, $limit, $offset, 'date_movie', 'DESC');
+    }
+
     public function createMovie(array $data): Movie
     {
         if (empty($data['title']) || empty($data['description']) || empty($data['release_date'])) {
