@@ -43,7 +43,7 @@ class MovieService
         return $this->movieRepository->findByCriteria([], $limit, $offset, 'ID_movie', 'DESC');
     }
 
-    public function getRelasedMovies(int $limit, int $offset): array
+    public function getReleasedMovies(int $limit, int $offset): array
     {
         $criteria = [
             'date_movie >=' => date('Y-m-d', strtotime('-30 days'))
