@@ -1,0 +1,7 @@
+{% extends "layouts/HomeLayout.twig" %}
+
+{% block content %}
+{% include 'components/tvshows/LastTvShowsAdded.twig' with {
+    lastTvShowsAdded: lastTvShowsAdded
+} only %}
+{% endblock %}

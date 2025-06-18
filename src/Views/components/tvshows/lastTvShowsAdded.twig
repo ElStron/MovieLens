@@ -1,0 +1,29 @@
+<section id="last-tvshow-added" class="last-tvshow-added max">
+    <h2 class="section-title">Últimas Series Añadidas</h2>
+    <ul class="tvshows-grid">
+        {% for show in lastTvShowsAdded %}
+        <li class="movie-card">
+            <a href="{{ show.slug }}">
+                <img src="{{ show.poster }}" alt="{{ show.title }} Poster" />
+                <h3>{{ show.title }}</h3>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+<style>
+    #last-tvshow-added {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 0 auto;
+        width: 100%;
+        .tvshows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+        }
+    }
+</style>
