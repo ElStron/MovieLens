@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index(): void
     {
         $lastMovieData = $this->movieService->getLastMovie();
-        $releasedMovies = $this->movieService->getRelasedMovies(5, 0);
+        $releasedMovies = $this->movieService->getReleasedMovies(5, 0);
         $lastMoviesAdded = $this->movieService->getLastMoviesAdded(5, 0);
 
         $this->twig('index', 
