@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
+define('APP_START', microtime(true));
+
 use App\Controllers\{HomeController, MoviesController};
-use App\Core\{Autoloader, Container, Router, Database};
+use App\Core\{Container, Router, Database};
 use App\Services\MovieService;
 use App\Repositories\MovieRepository;
 
-require_once __DIR__ . '/../src/Core/Autoloader.php';
-Autoloader::register();
+require_once __DIR__ . '/../vendor/autoload.php';
 
 if (!getenv('APP_ENV')) {
     require_once __DIR__ . '/../src/utils/env.php';
@@ -23,5 +24,6 @@ $router = new Router($container);
 $router->get('/', HomeController::class . '@index');
 $router->get('/peliculas', MoviesController::class . '@index');
 $router->get('/pelicula/{slug}', MoviesController::class . '@show');
+$router->get('/api/movies/{offset}/{limit}', MoviesController::class . '@apiIndex');
 
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
