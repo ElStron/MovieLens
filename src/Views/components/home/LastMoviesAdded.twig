@@ -1,0 +1,29 @@
+<section id="last-movies-added" class="last-movies-added max">
+    <h2 class="section-title">Últimas Películas Añadidas</h2>
+    <ul class="movies-grid">
+        {% for movie in lastMoviesAdded %}
+            <li>
+                {%
+                    include 'components/MovieCard.twig' 
+                    with { title: movie.title, image: movie.posterImage } only
+                %}
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+<style>
+    #last-movies-added {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 0 auto;
+        width: 100%;
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+        }
+    }
+</style>
