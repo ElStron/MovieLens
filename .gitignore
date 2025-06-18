@@ -7,3 +7,4 @@
 /.vscode
 /.nuxt
 /.nuxt-devtools
+/src/cache/twig
