@@ -1,0 +1,19 @@
+{
+    "name": "stron/movie-es",
+    "description": "movies and tv shows info",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ElStron",
+            "email": "luisstron45@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.21"
+    }
+}
